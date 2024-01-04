@@ -7,5 +7,14 @@ node {
             sh 'mvn test'
             junit 'target/surefire-reports/*.xml'
         }
+        stage('Deploy') {
+            def process = "./jenkins/scripts/deliver.sh".execute()
+
+            process.waitFor()
+
+            timeout(time: 1, unit: 'MINUTES') {
+                currentBuild.result = 'ABORTED'
+            }
+        }
     }
 }
