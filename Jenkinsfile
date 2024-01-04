@@ -1,5 +1,7 @@
 node {
     docker.image('maven:3.9.0').inside('-v /root/.m2:/root/.m2') {
+        def process
+
         stage('Build') {
             sh 'mvn -B -DskipTests clean package'
         }
@@ -8,12 +10,18 @@ node {
             junit 'target/surefire-reports/*.xml'
         }
         stage('Deploy') {
-            def process = "./jenkins/scripts/deliver.sh".execute()
-
-            process.waitFor()
-
-            timeout(time: 1, unit: 'MINUTES') {
-                currentBuild.result = 'ABORTED'
+            process = "./jenkins/scripts/deliver.sh".execute()
+        }
+        stage('Kill') {
+            try {
+                timeout(time: 1, unit: 'MINUTES') {
+                    sh 'sleep 60'
+                }
+            } finally {
+                if (process) {
+                    echo 'Process is killed'
+                    process.destroy()
+                }
             }
         }
     }
