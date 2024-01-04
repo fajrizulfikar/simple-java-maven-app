@@ -10,7 +10,7 @@ node {
             junit 'target/surefire-reports/*.xml'
         }
         stage('Deploy') {
-            process = "./jenkins/scripts/deliver.sh".execute()
+            process = sh(script: './jenkins/scripts/deliver.sh', returnStdout: true).start()
         }
         stage('Kill') {
             try {
