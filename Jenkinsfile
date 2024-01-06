@@ -10,19 +10,8 @@ node {
             junit 'target/surefire-reports/*.xml'
         }
         stage('Deploy') {
-            process = sh(script: './jenkins/scripts/deliver.sh', returnStdout: true).start()
-        }
-        stage('Kill') {
-            try {
-                timeout(time: 1, unit: 'MINUTES') {
-                    sh 'sleep 60'
-                }
-            } finally {
-                if (process) {
-                    echo 'Process is killed'
-                    process.destroy()
-                }
-            }
+            sh './jenkins/scripts/deliver.sh'
+            sh 'sleep 60'
         }
     }
 }
