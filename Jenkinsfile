@@ -13,6 +13,11 @@ node {
         }
         stage('Deploy') {
             input message: 'Lanjutkan ke tahap Deploy?'
+
+            // Set up Git config
+            sh 'git config --global user.email "fajrizulfikar85@gmail.com"'
+            sh 'git config --global user.name "Zulfikar Fajri"'
+
             // Deploy to Heroku
             sh 'git push heroku master'
 
