@@ -22,7 +22,7 @@ node {
         // sh 'git config --global user.name "Zulfikar Fajri"'
 
         // Deploy to Heroku
-        sh 'git push heroku master'
+        sh 'git push heroku HEAD:master'
 
         sh 'sleep 60'
     }
