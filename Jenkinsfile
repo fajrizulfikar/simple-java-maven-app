@@ -10,9 +10,6 @@ node {
             sh 'mvn test'
             junit 'target/surefire-reports/*.xml'
         }
-        stage('Prepare heroku') {
-            sh 'curl https://cli-assets.heroku.com/install-ubuntu.sh | sh'
-        }
         stage('Deploy') {
             input message: 'Lanjutkan ke tahap Deploy?'
 
