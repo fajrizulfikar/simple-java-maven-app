@@ -7,13 +7,13 @@ node {
             sh 'mvn test'
             junit 'target/surefire-reports/*.xml'
         }
-        stage('Deploy') {
-            input message: 'Lanjutkan ke tahap Deploy?'
+    }
+    stage('Deploy') {
+        input message: 'Lanjutkan ke tahap Deploy?'
 
-            // Deploy to Heroku
-            sh 'git push heroku'
+        // Deploy to Heroku
+        sh 'git push heroku'
 
-            sh 'sleep 60'
-        }
+        sh 'sleep 60'
     }
 }
