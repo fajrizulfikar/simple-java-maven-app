@@ -12,6 +12,8 @@ node {
     }
     stage('Build image') {
         sh 'pwd'
+        sh 'ls -la'
+        sh 'cat Dockerfile'
         dir('.') {
             sh 'docker build -t cicd-java .'
         }
