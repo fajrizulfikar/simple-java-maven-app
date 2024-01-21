@@ -11,9 +11,7 @@ node {
             input message: 'Lanjutkan ke tahap Deploy?'
 
             // Deploy to Heroku
-            sh 'heroku container:login'
-            sh 'heroku container:push web -a cicd-java'
-            sh 'heroku container:release web -a cicd-java'
+            sh 'git push heroku master'
 
             sh 'sleep 60'
         }
