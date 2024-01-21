@@ -13,12 +13,10 @@ node {
         stage('Deploy') {
             input message: 'Lanjutkan ke tahap Deploy?'
 
-            sh 'jenkins-heroku version'
-            // // Deploy to Heroku
-            // withCredentials([usernamePassword(credentialsId: 'heroku-credentials', usernameVariable: 'HEROKU_USERNAME', passwordVariable: 'HEROKU_PASSWORD')]) {
-            //     sh "heroku login"
-            //     sh "git push heroku HEAD:master"
-            // }
+            // Deploy to Heroku
+            withCredentials([usernamePassword(credentialsId: 'heroku-credentials', usernameVariable: 'HEROKU_USERNAME', passwordVariable: 'HEROKU_PASSWORD')]) {
+                mvn 'heroku:deploy'
+            }
 
             sh 'sleep 60'
         }
