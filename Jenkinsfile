@@ -1,4 +1,7 @@
 node {
+    environment {
+        HEROKU_API_KEY = credentials('heroku-credentials')
+    }
     stage('Checkout') {
         checkout scm
     }
@@ -14,7 +17,10 @@ node {
             input message: 'Lanjutkan ke tahap Deploy?'
 
             // Deploy to Heroku
-            sh 'git push heroku HEAD:master'
+            withCredentials([string(credentialsId: 'heroku-credentials', variable: 'HEROKU_API_KEY')]) {
+                sh "heroku auth:token:$HEROKU_API_KEY"
+                sh "git push heroku HEAD:master"
+            }
 
             sh 'sleep 60'
         }
