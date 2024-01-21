@@ -15,7 +15,7 @@ node {
 
             // Deploy to Heroku
             withCredentials([usernamePassword(credentialsId: 'heroku-credentials', usernameVariable: 'HEROKU_USERNAME', passwordVariable: 'HEROKU_PASSWORD')]) {
-                mvn 'heroku:deploy'
+                sh 'mvn "heroku:deploy"'
             }
 
             sh 'sleep 60'
