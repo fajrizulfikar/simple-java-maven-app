@@ -4,13 +4,15 @@ node {
             sh 'mvn clean install -DskipTests'
         }
     }
-    stage('Docker build') {
-        sh 'docker build -t cicd-java .'
-    }
     stage('Test') {
         docker.image('maven:3.9.0').inside('-v /root/.m2:/root/.m2') {
             sh 'mvn test'
             junit 'target/surefire-reports/*.xml'
+        }
+    }
+    stage('Build image') {
+        dir('.') {
+            sh 'docker build -t cicd-java .'
         }
     }
     stage('Deploy') {
