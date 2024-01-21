@@ -1,4 +1,7 @@
 node {
+    stage('Checkout') {
+        checkout([$class: 'GitSCM', branches: [[name: 'master']]])
+    }
     docker.image('maven:3.9.0').inside('-v /root/.m2:/root/.m2') {
         stage('Build') {
             sh 'mvn clean install -DskipTests'
@@ -12,7 +15,7 @@ node {
         input message: 'Lanjutkan ke tahap Deploy?'
 
         // Deploy to Heroku
-        sh 'git push heroku'
+        sh 'git push heroku HEAD:master'
 
         sh 'sleep 60'
     }
