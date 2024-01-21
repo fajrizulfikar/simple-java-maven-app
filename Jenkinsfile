@@ -11,7 +11,7 @@ node {
             input message: 'Lanjutkan ke tahap Deploy?'
 
             // Deploy to Heroku
-            sh 'git push heroku main'
+            sh 'git push heroku'
 
             sh 'sleep 60'
         }
