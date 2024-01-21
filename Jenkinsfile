@@ -1,32 +1,21 @@
 node {
-    agent {
-        dockerfile true
-    }
-    stage('Maven build') {
-        docker.image('maven:3.9.0').inside('-v /root/.m2:/root/.m2') {
+    docker.image('maven:3.9.0').inside('-v /root/.m2:/root/.m2') {
+        stage('Build') {
             sh 'mvn clean install -DskipTests'
         }
-    }
-    stage('Test') {
-        docker.image('maven:3.9.0').inside('-v /root/.m2:/root/.m2') {
+        stage('Test') {
             sh 'mvn test'
             junit 'target/surefire-reports/*.xml'
         }
-    }
-    stage('Build image') {
-        sh 'pwd'
-        sh 'ls -la'
-        sh 'cat /var/jenkins_home/workspace/submission-cicd-pipeline-zulfikarfajri/Dockerfile'
-        sh 'docker build -t cicd-java /var/jenkins_home/workspace/submission-cicd-pipeline-zulfikarfajri'
-    }
-    stage('Deploy') {
-        input message: 'Lanjutkan ke tahap Deploy?'
+        stage('Deploy') {
+            input message: 'Lanjutkan ke tahap Deploy?'
 
-        // Deploy to Heroku
-        sh 'heroku container:login'
-        sh 'heroku container:push web -a cicd-java'
-        sh 'heroku container:release web -a cicd-java'
+            // Deploy to Heroku
+            sh 'heroku container:login'
+            sh 'heroku container:push web -a cicd-java'
+            sh 'heroku container:release web -a cicd-java'
 
-        sh 'sleep 60'
+            sh 'sleep 60'
+        }
     }
 }
