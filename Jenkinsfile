@@ -11,6 +11,7 @@ node {
         }
     }
     stage('Build image') {
+        sh 'pwd'
         dir('.') {
             sh 'docker build -t cicd-java .'
         }
