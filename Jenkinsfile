@@ -16,8 +16,8 @@ node {
     stage('Build image') {
         sh 'pwd'
         sh 'ls -la'
-        sh 'cat Dockerfile'
-        sh 'docker build -t cicd-java .'
+        sh 'cat /var/jenkins_home/workspace/submission-cicd-pipeline-zulfikarfajri/Dockerfile'
+        sh 'docker build -t cicd-java /var/jenkins_home/workspace/submission-cicd-pipeline-zulfikarfajri'
     }
     stage('Deploy') {
         input message: 'Lanjutkan ke tahap Deploy?'
