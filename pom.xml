@@ -71,6 +71,11 @@
         <groupId>com.heroku.sdk</groupId>
         <artifactId>heroku-maven-plugin</artifactId>
         <version>3.0.7</version>
+        <configuration>
+          <processTypes>
+            <web>java $JAVA_OPTS -jar target/${project.name}-${project.version}.jar</web>
+          </processTypes>
+        </configuration>
       </plugin>
     </plugins>
   </build>
