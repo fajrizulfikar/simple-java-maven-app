@@ -2,7 +2,7 @@ node {
     stage('Checkout') {
         checkout scm
     }
-    docker.image('maven:3.9.0').inside('-v /root/.m2:/root/.m2') {
+    docker.image('maven:3.9.0').inside('-v /root/.m2:/root/.m2 -u root:sudo') {
         stage('Build') {
             sh 'mvn clean install -DskipTests'
         }
