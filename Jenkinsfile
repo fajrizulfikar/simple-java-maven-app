@@ -1,4 +1,7 @@
 node {
+    agent {
+        dockerfile true
+    }
     stage('Maven build') {
         docker.image('maven:3.9.0').inside('-v /root/.m2:/root/.m2') {
             sh 'mvn clean install -DskipTests'
@@ -14,9 +17,7 @@ node {
         sh 'pwd'
         sh 'ls -la'
         sh 'cat Dockerfile'
-        dir('.') {
-            sh 'docker build -t cicd-java .'
-        }
+        sh 'docker build -t cicd-java .'
     }
     stage('Deploy') {
         input message: 'Lanjutkan ke tahap Deploy?'
