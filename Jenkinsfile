@@ -15,7 +15,7 @@ node {
 
             // Deploy to Heroku
             withCredentials([usernamePassword(credentialsId: 'heroku-credentials', usernameVariable: 'HEROKU_USERNAME', passwordVariable: 'HEROKU_PASSWORD')]) {
-                sh "heroku auth:token:set $HEROKU_PASSWORD"
+                sh "heroku login"
                 sh "git push heroku HEAD:master"
             }
 
