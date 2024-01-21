@@ -1,12 +1,11 @@
 node {
-    stage('Build') {
+    stage('Maven build') {
         docker.image('maven:3.9.0').inside('-v /root/.m2:/root/.m2') {
-            // Maven build
-            sh 'mvn -B -DskipTests clean package'
-
-            // Archive artifacts
-            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            sh 'mvn clean install -DskipTests'
         }
+    }
+    stage('Docker build') {
+        sh 'docker build -t cicd-java .'
     }
     stage('Test') {
         docker.image('maven:3.9.0').inside('-v /root/.m2:/root/.m2') {
@@ -17,12 +16,10 @@ node {
     stage('Deploy') {
         input message: 'Lanjutkan ke tahap Deploy?'
 
-        // // Set up Git config
-        // sh 'git config --global user.email "fajrizulfikar85@gmail.com"'
-        // sh 'git config --global user.name "Zulfikar Fajri"'
-
         // Deploy to Heroku
-        sh 'git push heroku HEAD:master'
+        sh 'heroku container:login'
+        sh 'heroku container:push web -a cicd-java'
+        sh 'heroku container:release web -a cicd-java'
 
         sh 'sleep 60'
     }
