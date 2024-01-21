@@ -13,7 +13,7 @@ node {
         stage('Deploy') {
             input message: 'Lanjutkan ke tahap Deploy?'
 
-            echo "Current Directory: $(pwd)"
+            echo "Current Directory: $PWD"
             echo "PATH: $PATH"
             echo heroku -v
 
