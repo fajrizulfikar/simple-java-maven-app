@@ -13,7 +13,7 @@ node {
         stage('Deploy') {
             input message: 'Lanjutkan ke tahap Deploy?'
 
-            sh 'heroku version'
+            sh 'jenkins-heroku version'
             // // Deploy to Heroku
             // withCredentials([usernamePassword(credentialsId: 'heroku-credentials', usernameVariable: 'HEROKU_USERNAME', passwordVariable: 'HEROKU_PASSWORD')]) {
             //     sh "heroku login"
