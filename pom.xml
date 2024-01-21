@@ -74,7 +74,7 @@
         <configuration>
           <appName>secret-depths-05887</appName>
           <processTypes>
-            <web>java $JAVA_OPTS -cp target/classes:target/dependency/* App</web>
+            <web>java $JAVA_OPTS -cp java $JAVA_OPTS -cp target/classes com.mycompany.app.App</web>
           </processTypes>
         </configuration>
       </plugin>
