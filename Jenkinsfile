@@ -13,6 +13,10 @@ node {
         stage('Deploy') {
             input message: 'Lanjutkan ke tahap Deploy?'
 
+            echo "Current Directory: $(pwd)"
+            echo "PATH: $PATH"
+            echo heroku -v
+
             // Deploy to Heroku
             withCredentials([usernamePassword(credentialsId: 'heroku-credentials', usernameVariable: 'HEROKU_USERNAME', passwordVariable: 'HEROKU_PASSWORD')]) {
                 sh 'mvn "heroku:deploy"'
