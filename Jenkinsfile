@@ -10,14 +10,13 @@ node {
             sh 'mvn test'
             junit 'target/surefire-reports/*.xml'
         }
-    }
-    stage('Deploy') {
-        input message: 'Lanjutkan ke tahap Deploy?'
+        stage('Deploy') {
+            input message: 'Lanjutkan ke tahap Deploy?'
 
-        // Deploy to Heroku
-        sh 'heroku git:remote -a cicd-java'
-        sh 'git push heroku HEAD:master'
+            // Deploy to Heroku
+            sh 'mvn heroku:deploy'
 
-        sh 'sleep 60'
+            sh 'sleep 60'
+        }
     }
 }
