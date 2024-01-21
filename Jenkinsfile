@@ -1,6 +1,6 @@
 node {
     stage('Checkout') {
-        checkout([$class: 'GitSCM', branches: [[name: 'master']]])
+        checkout scm
     }
     docker.image('maven:3.9.0').inside('-v /root/.m2:/root/.m2') {
         stage('Build') {
