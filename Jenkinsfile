@@ -10,9 +10,10 @@ node {
             sh 'mvn test'
             junit 'target/surefire-reports/*.xml'
         }
-        stage('Deploy') {
+        stage('Manual Approval') {
             input message: 'Lanjutkan ke tahap Deploy?'
-
+        }
+        stage('Deploy') {
             // Deploy to Heroku
             withCredentials([usernamePassword(credentialsId: 'heroku-credentials', usernameVariable: 'HEROKU_USERNAME', passwordVariable: 'HEROKU_PASSWORD')]) {
                 sh "HEROKU_API_KEY=$HEROKU_PASSWORD mvn heroku:deploy"
